@@ -6,15 +6,15 @@
 
 .section {
   background-color: white;
-  height: 70%;
+  height: 750px;
   width: clamp(20%, 500px, 90%);
-  border: 1px solid #b8b8b8;
-  border-radius: 10px;
+  border: 1px solid #e1dddd;
+  border-radius: 40px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
-    rgba(17, 17, 26, 0.1) 0px 8px 32px;
+  box-shadow: rgba(17, 17, 26, 0.043) 0px 4px 16px,
+    rgba(17, 17, 26, 0.043) 0px 8px 32px;
 }
 
 .mention-menu {
@@ -31,39 +31,80 @@
 }
 
 .recording {
-    fill: red;
-    animation: recording 400ms linear infinite alternate;
+  fill: red;
+  animation: recording 400ms linear infinite alternate;
 }
 
 @keyframes recording {
   from {
     transform: scale(1);
   }
-  to{
-    transform: scale(.9);
+  to {
+    transform: scale(0.9);
   }
 }
 
-
-
-.input-container-record{
-    animation: springywidth 600ms cubic-bezier(0.25, 0.1, 0.25, 1) 1 ;
+.input-container-record {
+  animation: springywidth 400ms cubic-bezier(0.3, 0.6, 0.8, 1.2)
+  1;
 }
-
 
 @keyframes springywidth {
-    0%{
-        width: 100%;
-    }
-    50%{
-        width: 95%;
-    }
-    100%{
-        width: 100%;
-    }
+  0% {
+    width: 100%;
+  }
+  50% {
+    width: 95%;
+  }
+  100% {
+    width: 100%;
+  }
 }
 
+::placeholder {
+  transition: all 200ms ease-in-out;
+}
 
-::placeholder{
-    transition: all 200ms ease-in-out;
+.text-container{
+  scroll-behavior: smooth !important;
+}
+
+.text-container::-webkit-scrollbar {
+  background-color: transparent transparent;
+  width: 5px;
+}
+
+.text-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.sent-message {
+  border-radius: 5px;
+}
+
+.received-message {
+  border-radius: 5px;
+}
+
+.top-text{
+  border-radius: 30px;
+  border-top-right-radius: 5px;
+}
+
+.top-text-received{
+  border-radius: 30px;
+  border-top-left-radius: 5px;
+}
+
+.bottom-text{
+  border-radius: 30px;
+}
+
+.middle-text{
+  border-radius: 30px;
+}
+
+.single-text{
+  border-radius: 30px !important;
 }
