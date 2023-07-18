@@ -190,11 +190,11 @@ export default function Home() {
         </div>
         <div className="w-full h-full hidden lg:block">
           <div className="w-full max-h-2/4 h-2/4">
-            <div className="w-[95%] h-auto m-auto  border-black">
-              <h1 className="font-jost text-md font-semibold text-[#555] my-2 ml-6">
+            <div className="w-[95%] h-auto m-auto  border-black box-border">
+              <h1 className="font-jost text-md font-semibold text-[#555] pl-6 my-4">
                 Direct messages
               </h1>
-              <DirectMessage />
+              <DirectMessage/>
             </div>
           </div>
           <div className="w-full max-h-2/4 h-2/4 border-t-2 border-border-color"></div>
@@ -206,33 +206,38 @@ export default function Home() {
   );
 }
 
+
 const DirectMessage = () => {
-  return (
-    <div className="w-full h-24 flex items-center hover:bg-blue-100 transition-all ease duration-200 cursor-pointer rounded-xl mt-1">
-      <div className="h-full aspect-square grid place-items-center">
-        <div className="w-[60%] rounded-full aspect-square border border-black overflow-hidden">
-          <img
-            src="https://i.pinimg.com/564x/eb/4c/14/eb4c14800bd9dbbffacabaa0d99448cb.jpg"
-            className="w-full h-full object-cover "
-            alt=""
-          />
-        </div>
-      </div>
-      <div className="w-2/4 overflow-hidden flex flex-col justify-center">
-        <h1 className="font-poppins text-lg font-semibold">Mary Lucy</h1>
-        <h1 className="truncate text-sm font-poppins tracking-wide">
-          Exercitation duis in commodo eiusmod irure laboris reprehenderit sunt
-          exercitation. Sint dolor excepteur ex consequat laboris ad voluptate
-          proident. In nisi commodo adipisicing anim laborum occaecat ad magna
-          ea pariatur esse exercitation fugiat aliquip. Duis ipsum labore
-          occaecat voluptate elit sint fugiat. Non veniam tempor Lorem commodo
-          quis non esse in esse anim dolor consectetur aute. Exercitation magna
-          duis eiusmod ut. Ullamco aute eiusmod labore ea magna eu velit esse
-          occaecat non cupidatat amet id.
-        </h1>
+  return(
+    <div className="w-full h-24 flex items-center hover:bg-blue-200 rounded-xl transition-all ease duration-200 cursor-pointer">
+    <div className="h-full aspect-square grid place-items-center">
+      <div className="w-[60%] rounded-full aspect-square border border-black overflow-hidden">
+        <img
+          src="https://i.pinimg.com/564x/eb/4c/14/eb4c14800bd9dbbffacabaa0d99448cb.jpg"
+          className="w-full h-full object-cover "
+          alt=""
+        />
       </div>
     </div>
-  );
+    <div className="w-2/4 overflow-hidden flex flex-col justify-center">
+      <h1 className="font-poppins text-lg font-semibold">
+        Mary Lucy
+      </h1>
+      <h1 className="truncate text-sm font-poppins tracking-wide">
+        Exercitation duis in commodo eiusmod irure laboris
+        reprehenderit sunt exercitation. Sint dolor excepteur ex
+        consequat laboris ad voluptate proident. In nisi commodo
+        adipisicing anim laborum occaecat ad magna ea pariatur esse
+        exercitation fugiat aliquip. Duis ipsum labore occaecat
+        voluptate elit sint fugiat. Non veniam tempor Lorem commodo
+        quis non esse in esse anim dolor consectetur aute.
+        Exercitation magna duis eiusmod ut. Ullamco aute eiusmod
+        labore ea magna eu velit esse occaecat non cupidatat amet
+        id.
+      </h1>
+    </div>
+  </div>
+  )
 };
 
 {
