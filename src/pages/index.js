@@ -176,11 +176,65 @@ export default function Home() {
 
   return (
     <main className="w-screen h-screen bg-white flex">
-      <section className="lg:w-[35%] md:w-[20%] w-0 h-full border border-black bg-blue-100"></section>
-      <section className="flex-grow bg-red-300"></section>
+      <section className="xl:w-[25%] md:w-[25%] w-0 h-full border-r-2 border-bordercolor bg-white flex flex-col">
+        <div className="h-24 w-full bg-white border-b-2 border-bordercolor"></div>
+        <div className="w-full flex-grow lg:hidden">
+          <div className="w-[60%] h-[90%]  m-auto">
+            <div className="w-full aspect-square border border-black flex items-center flex-col justify-center gap-4">
+              <div className="w-2/4 aspect-square border border-black rounded-full"></div>
+              <h1 className="text-2xl font-jost w-2/4 text-center truncate">
+                Jeff
+              </h1>
+            </div>
+          </div>
+        </div>
+        <div className="w-full h-full hidden lg:block">
+          <div className="w-full max-h-2/4 h-2/4">
+            <div className="w-[95%] h-auto m-auto  border-black">
+              <h1 className="font-jost text-md font-semibold text-[#555] my-2 ml-6">
+                Direct messages
+              </h1>
+              <DirectMessage />
+            </div>
+          </div>
+          <div className="w-full max-h-2/4 h-2/4 border-t-2 border-border-color"></div>
+        </div>
+      </section>
+      <section className="flex-grow bg-white w-[52%]"></section>
+      <section className="w-[23%] hidden xl:block border-l-2 border-bordercolor"></section>
     </main>
   );
 }
+
+const DirectMessage = () => {
+  return (
+    <div className="w-full h-24 flex items-center hover:bg-blue-100 transition-all ease duration-200 cursor-pointer rounded-xl mt-1">
+      <div className="h-full aspect-square grid place-items-center">
+        <div className="w-[60%] rounded-full aspect-square border border-black overflow-hidden">
+          <img
+            src="https://i.pinimg.com/564x/eb/4c/14/eb4c14800bd9dbbffacabaa0d99448cb.jpg"
+            className="w-full h-full object-cover "
+            alt=""
+          />
+        </div>
+      </div>
+      <div className="w-2/4 overflow-hidden flex flex-col justify-center">
+        <h1 className="font-poppins text-lg font-semibold">Mary Lucy</h1>
+        <h1 className="truncate text-sm font-poppins tracking-wide">
+          Exercitation duis in commodo eiusmod irure laboris reprehenderit sunt
+          exercitation. Sint dolor excepteur ex consequat laboris ad voluptate
+          proident. In nisi commodo adipisicing anim laborum occaecat ad magna
+          ea pariatur esse exercitation fugiat aliquip. Duis ipsum labore
+          occaecat voluptate elit sint fugiat. Non veniam tempor Lorem commodo
+          quis non esse in esse anim dolor consectetur aute. Exercitation magna
+          duis eiusmod ut. Ullamco aute eiusmod labore ea magna eu velit esse
+          occaecat non cupidatat amet id.
+        </h1>
+      </div>
+    </div>
+  );
+};
+
 {
   /* <section className="border section pb-3">
         <div className="w-full h-14 border-b flex items-center relative">

@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -45,8 +47,7 @@
 }
 
 .input-container-record {
-  animation: springywidth 400ms cubic-bezier(0.3, 0.6, 0.8, 1.2)
-  1;
+  animation: springywidth 400ms cubic-bezier(0.3, 0.6, 0.8, 1.2) 1;
 }
 
 @keyframes springywidth {
@@ -65,7 +66,7 @@
   transition: all 200ms ease-in-out;
 }
 
-.text-container{
+.text-container {
   scroll-behavior: smooth !important;
 }
 
@@ -87,24 +88,24 @@
   border-radius: 5px;
 }
 
-.top-text{
+.top-text {
   border-radius: 30px;
   border-top-right-radius: 5px;
 }
 
-.top-text-received{
+.top-text-received {
   border-radius: 30px;
   border-top-left-radius: 5px;
 }
 
-.bottom-text{
+.bottom-text {
   border-radius: 30px;
 }
 
-.middle-text{
+.middle-text {
   border-radius: 30px;
 }
 
-.single-text{
+.single-text {
   border-radius: 30px !important;
 }

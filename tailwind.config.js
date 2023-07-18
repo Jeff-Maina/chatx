@@ -9,7 +9,11 @@ module.exports = {
     extend: {
       fontFamily: {
         "jost": "Jost",
+        "poppins": "Poppins"
       },
+      colors: {
+        "bordercolor": "#e6e6e6"
+      }
     },
   },
   plugins: [],
