@@ -174,78 +174,22 @@ export default function Home() {
     }
   };
 
+
+  const[toolTipActive, setToolTipActive] = useState(false)
+const toolTipClass = toolTipActive ? "top-20" : "top-2";
   return (
-    <main className="w-screen h-screen bg-white flex">
-      <section className="xl:w-[25%] md:w-[25%] w-0 h-full border-r-2 border-bordercolor bg-white flex flex-col">
-        <div className="h-24 w-full bg-white border-b-2 border-bordercolor"></div>
-        <div className="w-full flex-grow lg:hidden">
-          <div className="w-[60%] h-[90%]  m-auto">
-            <div className="w-full aspect-square border border-black flex items-center flex-col justify-center gap-4">
-              <div className="w-2/4 aspect-square border border-black rounded-full"></div>
-              <h1 className="text-2xl font-jost w-2/4 text-center truncate">
-                Jeff
-              </h1>
-            </div>
-          </div>
+    <main className="w-screen h-screen  grid place-items-center">
+      <section className="section pb-3 relative">
+        <div className={`absolute ${toolTipClass} bg-black text-white p-2 left-2/4 -translate-x-2/4 rounded-full px-6 transition-all ease duration-300 tooltip` }>
+          <p className="font-poppins">Do something</p>
         </div>
-        <div className="w-full h-full hidden lg:block">
-          <div className="w-full max-h-2/4 h-2/4">
-            <div className="w-[95%] h-auto m-auto  border-black box-border">
-              <h1 className="font-jost text-md font-semibold text-[#555] pl-6 my-4">
-                Direct messages
-              </h1>
-              <DirectMessage/>
-            </div>
-          </div>
-          <div className="w-full max-h-2/4 h-2/4 border-t-2 border-border-color"></div>
-        </div>
-      </section>
-      <section className="flex-grow bg-white w-[52%]"></section>
-      <section className="w-[23%] hidden xl:block border-l-2 border-bordercolor"></section>
-    </main>
-  );
-}
-
-
-const DirectMessage = () => {
-  return(
-    <div className="w-full h-24 flex items-center hover:bg-blue-200 rounded-xl transition-all ease duration-200 cursor-pointer">
-    <div className="h-full aspect-square grid place-items-center">
-      <div className="w-[60%] rounded-full aspect-square border border-black overflow-hidden">
-        <img
-          src="https://i.pinimg.com/564x/eb/4c/14/eb4c14800bd9dbbffacabaa0d99448cb.jpg"
-          className="w-full h-full object-cover "
-          alt=""
-        />
-      </div>
-    </div>
-    <div className="w-2/4 overflow-hidden flex flex-col justify-center">
-      <h1 className="font-poppins text-lg font-semibold">
-        Mary Lucy
-      </h1>
-      <h1 className="truncate text-sm font-poppins tracking-wide">
-        Exercitation duis in commodo eiusmod irure laboris
-        reprehenderit sunt exercitation. Sint dolor excepteur ex
-        consequat laboris ad voluptate proident. In nisi commodo
-        adipisicing anim laborum occaecat ad magna ea pariatur esse
-        exercitation fugiat aliquip. Duis ipsum labore occaecat
-        voluptate elit sint fugiat. Non veniam tempor Lorem commodo
-        quis non esse in esse anim dolor consectetur aute.
-        Exercitation magna duis eiusmod ut. Ullamco aute eiusmod
-        labore ea magna eu velit esse occaecat non cupidatat amet
-        id.
-      </h1>
-    </div>
-  </div>
-  )
-};
-
-{
-  /* <section className="border section pb-3">
-        <div className="w-full h-14 border-b flex items-center relative">
+        <div className="w-full h-14 border-b border-zinc-300 bg-zinc-200 flex items-center relative">
           <div
             className="h-6 w-6 bg-zinc-500 rounded-[50%] absolute right-4"
-            onClick={replyMessage}
+            // onClick={replyMessage}
+            onClick={()=>{
+              setToolTipActive(!toolTipActive)
+            }}
           ></div>
         </div>
         <div className="w-full flex-grow flex flex-col">
@@ -314,7 +258,9 @@ const DirectMessage = () => {
                           : ""
                       }
                       ${
-                        index === 0 && ( textMessages[index + 1] == null || textMessages[index + 1].type !== message.type)
+                        index === 0 &&
+                        (textMessages[index + 1] == null ||
+                          textMessages[index + 1].type !== message.type)
                           ? "single-text"
                           : ""
                       }
@@ -364,9 +310,7 @@ const DirectMessage = () => {
               </div>
             </div>
 
-            <div
-              className="h-12 border border-[#b8b8b8] flex rounded-full relative z-10 bg-white input-container w-[100%]"
-            >
+            <div className="h-12 border border-[#b8b8b8] flex rounded-full relative z-10 bg-white input-container w-[100%]">
               <div className="h-full aspect-square mx-2 rounded-full grid place-items-center image-icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -412,5 +356,7 @@ const DirectMessage = () => {
             </div>
           </div>
         </div>
-      </section> */
+      </section>
+    </main>
+  );
 }
