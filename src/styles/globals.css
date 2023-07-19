@@ -125,8 +125,7 @@ body {
   border: 1px solid #d1d0d0;
 }
 
-
-.picture-gallery{
+.picture-gallery {
   backdrop-filter: blur(10px);
   background-color: #ffffff8a;
   background-blend-mode: overlay;
@@ -137,13 +136,18 @@ body {
   border-top-left-radius: 30px;
 }
 
-.image-container{
+.image-container {
   /* backdrop-filter: blur(5px); */
   border-radius: 20px;
   background-color: #ffffff00;
   scroll-margin-right: 20px;
 }
 
-.image-container::-webkit-scrollbar{
+.image-container::-webkit-scrollbar {
   display: none;
+}
+
+.image {
+  box-shadow: rgba(154, 154, 154, 0.5) 0px 6px 10px,
+    rgba(17, 17, 26, 0.1) 0px 6px 6px,rgba(192, 192, 192, 0.1) 0px 24px 80px;
 }

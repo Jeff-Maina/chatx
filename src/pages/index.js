@@ -202,11 +202,6 @@ export default function Home() {
     "https://images.unsplash.com/photo-1542596594-649edbc13630?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
   ];
 
-
-
-
-  
-
   return (
     <main className="w-screen h-screen  grid place-items-center">
       <section
@@ -387,6 +382,10 @@ export default function Home() {
                 <AnimatePresence>
                   {isPictureGalleryActive === true && (
                     <motion.div
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{
+                        duration: 0.2,
+                      }}
                       layout
                       className="w-full h-[89%] rounded-lg bg-white image-container flex items-center pl-4  gap-3 overflow-x-scroll"
                     >
@@ -394,17 +393,22 @@ export default function Home() {
                         return (
                           <AnimatePresence>
                             <motion.div
-                              layout
+                              // layout
                               key={index}
-                              initial={{ opacity: 0, y: 30, scale: 0.7, y: 10 }}
+                              initial={{ opacity: 1, y: 100, scale: 0.9 }}
                               animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0 }}
+                              exit={{ opacity: 0, y: 100 }}
                               transition={{
                                 opacity: {
-                                  duration: 0.6,
-                                  delay: index * 0.1 + 0.2,
+                                  duration: 0.7,
+                                  delay: index * 0.2,
                                 },
-                                y: { duration: 0.4, delay: index * 0.1 + 0.2 },
+                                y: {
+                                  duration: 0.4,
+                                  delay: index * 0.04,
+                                  type: "spring",
+                                  damping: "8",
+                                },
                                 scale: {
                                   duration: 0.5,
                                   type: "spring",
@@ -413,11 +417,19 @@ export default function Home() {
                               }}
                               whileInView={{
                                 scale: 1,
-                                y: 0,
                               }}
-                              className="h-[80%] w-32 min-w-[128px] rounded-lg bg-black overflow-hidden"
+                              className="h-[80%] w-32 min-w-[128px] rounded-lg bg-black overflow-hidden image"
                             >
-                              <img
+                              <motion.img
+                                initial={{ scale: 1 }}
+                                whileInView={{
+                                  scale: 1.2,
+                                }}
+                                transition={{
+                                  scale: {
+                                    duration: 0.5,
+                                  }
+                                }}
                                 src={`${image}`}
                                 className="h-full w-full object-cover"
                                 alt=""
