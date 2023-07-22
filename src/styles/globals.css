@@ -18,7 +18,7 @@ body {
   background-color: white;
   height: 750px;
   width: clamp(20%, 500px, 90%);
-  border-radius: 14px;
+  border-radius: 0px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -96,7 +96,8 @@ body {
 
 .top-text {
   border-radius: 30px;
-  border-top-right-radius: 5px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 10px;
 }
 
 .top-text-received {
@@ -106,10 +107,13 @@ body {
 
 .bottom-text {
   border-radius: 30px;
+  border-top-right-radius: 10px;
 }
 
 .middle-text {
   border-radius: 30px;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .single-text {
@@ -148,6 +152,4 @@ body {
 }
 
 .image {
-  box-shadow: rgba(154, 154, 154, 0.5) 0px 6px 10px,
-    rgba(17, 17, 26, 0.1) 0px 6px 6px,rgba(192, 192, 192, 0.1) 0px 24px 80px;
 }

@@ -1,13 +1,8 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useEffect, useState, useRef } from "react";
-import {
-  AnimatePresence,
-  easeIn,
-  motion,
-  useAnimate,
-  useSpring,
-} from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+// import bubbleSound from "./bubble-sound.mp3"
 
 export default function Home() {
   const conversation = [];
@@ -30,7 +25,22 @@ export default function Home() {
       };
       setTextMessages([...textMessages, messageObj]);
       setMessage("");
+      const sound = new Audio("/bubble-sound.mp3");
+      sound.playbackRate = 1.9;
+      sound.play();
     }
+  };
+
+  const sendMessage = (e) => {
+    let messageObj = {
+      type: "Sent",
+      message,
+    };
+    setTextMessages([...textMessages, messageObj]);
+    setMessage("");
+    const sound = new Audio("/bubble-sound.mp3");
+    sound.playbackRate = 1.9;
+    sound.play();
   };
 
   const replyMessage = (e) => {
@@ -110,15 +120,10 @@ export default function Home() {
     paddingLeft,
     classList,
   }) => {
-    let icon = document.querySelector(".mic");
-    let ImageIcon = document.querySelector(".image-icon");
     let inputContainer = document.querySelector(".input-container");
     let messageInput = document.querySelector("#message-input");
 
-    icon.classList.remove(className);
     messageInput.placeholder = placeholder;
-    ImageIcon.style.display = display;
-    inputContainer.style.paddingLeft = paddingLeft;
     inputContainer.classList.add(classList);
     setTimeout(() => {
       inputContainer.classList.remove(classList);
@@ -244,7 +249,7 @@ export default function Home() {
         </div>
         <div className="w-full h-14 border-b border-zinc-300 bg-zinc-200 flex items-center relative">
           <div
-            className="h-6 w-6 bg-zinc-500 rounded-[50%] absolute right-4"
+            className="h-6 w-6 bg-zinc-500 rounded-[50%] absolute right-5"
             // onClick={replyMessage}
             onClick={(e) => {
               e.stopPropagation();
@@ -253,11 +258,17 @@ export default function Home() {
           ></div>
         </div>
         <div className="w-full flex-grow flex flex-col">
-          <div className="flex-grow w-full p-2 pl-5 pb-0 pt-6">
+          <div className="flex-grow w-full pl-5 pb-0 pt-6">
             <ul
               ref={messagesContainerRef}
               className="w-full h-full overflow-y-auto  border-black max-h-[600px] text-container pb-3"
             >
+              {/* <audio
+               controls
+              >
+                <source src="/bubble-sound.mp3" type="audio/mp3"/>
+              </audio> */}
+
               <AnimatePresence initial={false} mode="popLayout">
                 {textMessages.map((message, index) => {
                   return (
@@ -268,6 +279,9 @@ export default function Home() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{
                         opacity: { duration: 0.1 },
+                        scale: {
+                          duration: 0.3,
+                        },
                         layout: {
                           duration: index * 0.01,
                         },
@@ -281,9 +295,9 @@ export default function Home() {
                           ? "mt-3"
                           : "mt-[2px]"
                       }
-                  flex text-white w-[99%] px-4`}
+                  flex text-white w-[99%] px-3`}
                     >
-                      <p
+                      <div
                         className={`text-lg py-3 px-5 font-jost ${
                           message.type === "Sent"
                             ? "bg-blue-600 ml-auto sent-message top-text"
@@ -325,10 +339,13 @@ export default function Home() {
                           ? "single-text"
                           : ""
                       }
-                      max-w-[70%] leading-6`}
+                      max-w-[80%] overflow-ellipsis h-auto leading-6`}
                       >
-                        {message.message + index}
-                      </p>
+                        <p className="break-words">
+                          {" "}
+                          {message.message + index}
+                        </p>
+                      </div>
                     </motion.li>
                   );
                 })}
@@ -373,7 +390,7 @@ export default function Home() {
 
             <div className="h-12 border border-[#b8b8b8] flex rounded-full relative z-10 bg-white input-container w-[100%]">
               <div
-                className={`absolute w-[100.5%] left-2/4 -translate-x-2/4 bottom-4  ${picGalleryClass} transition-height ease  picture-gallery p-4 border border-[#b8b8b8]`}
+                className={`absolute w-[100.6%] left-2/4 -translate-x-2/4 bottom-4  ${picGalleryClass} transition-height ease  picture-gallery p-4 border border-[#b8b8b8]`}
                 onClick={(e) => {
                   e.stopPropagation();
                   setPictureGalleryActive(true);
@@ -428,7 +445,7 @@ export default function Home() {
                                 transition={{
                                   scale: {
                                     duration: 0.5,
-                                  }
+                                  },
                                 }}
                                 src={`${image}`}
                                 className="h-full w-full object-cover"
@@ -443,7 +460,7 @@ export default function Home() {
                 </AnimatePresence>
               </div>
 
-              <div className="flex w-full z-10 bg-white rounded-full">
+              <div className="flex w-full z-10 bg-white rounded-full items-center pr-6">
                 {" "}
                 <div className="h-full aspect-square mx-2 rounded-full grid place-items-center image-icon">
                   <svg
@@ -475,22 +492,26 @@ export default function Home() {
                     value={message}
                   />
                 </div>
-                <div className="h-full aspect-square rounded-full grid place-items-center mx-1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    id="recording"
-                    height="26"
-                    width="26"
-                    // onClick={startRecording}
-                    fill="#555"
-                    className="mic"
-                  >
-                    <path d="M8 11c1.65 0 3-1.35 3-3V3c0-1.65-1.35-3-3-3S5 1.35 5 3v5c0 1.65 1.35 3 3 3z"></path>
-                    <path d="M12 7.958V8c0 2.2-1.8 4-4 4s-4-1.8-4-4v-.042H3V8a5.009 5.009 0 0 0 4 4.899V15H5v1h6v-1H9v-2.101A5.009 5.009 0 0 0 13 8v-.042h-1z"></path>
-                  </svg>
-                </div>
               </div>
+            </div>
+            <div
+              className="h-[80%] aspect-square bg-purple-400 rounded-full cursor-pointer grid place-items-center"
+              onClick={sendMessage}
+            >
+              <svg
+                width="19"
+                height="18"
+                viewBox="0 0 19 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M0.790001 3.803C0.530001 1.469 2.933 -0.245002 5.056 0.760998L17 6.419C19.288 7.502 19.288 10.758 17 11.841L5.056 17.5C2.933 18.506 0.531001 16.792 0.790001 14.458L2.38779 10.1301L9.388 10.13C9.65322 10.13 9.90757 10.0246 10.0951 9.8371C10.2826 9.64957 10.388 9.39521 10.388 9.13C10.388 8.86478 10.2826 8.61043 10.0951 8.42289C9.90757 8.23536 9.65322 8.13 9.388 8.13L2.5 8L0.791001 3.803H0.790001Z"
+                  fill="#f4f4f4"
+                />
+              </svg>
             </div>
           </div>
         </div>
