@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useEffect, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { messages } from "@/data/messages";
+
 // import bubbleSound from "./bubble-sound.mp3"
 
 export default function Home() {
@@ -18,7 +20,7 @@ export default function Home() {
   const [message, setMessage] = useState("");
 
   const addMessage = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && message !== "") {
       let messageObj = {
         type: "Sent",
         message,
@@ -44,11 +46,17 @@ export default function Home() {
   };
 
   const replyMessage = (e) => {
+    let randomIndex = Math.round(Math.random() * ((messages.length - 1) - 0) + 0);
+
+    const new_message = messages[randomIndex];
     let messageObj = {
       type: "Received",
-      message: "Non cupidatat deserunt fugiat ipsum.",
+      message: new_message,
     };
     setTextMessages([...textMessages, messageObj]);
+    const sound = new Audio("/bubble-sound.mp3");
+    sound.playbackRate = 1.9;
+    sound.play();
   };
 
   const scrollToBottom = () => {
@@ -113,13 +121,7 @@ export default function Home() {
   const [isRecording, setIsRecording] = useState(false);
   const [hasStoppedRecording, setHasStoppedRecording] = useState(false);
 
-  const updateMessageInput = ({
-    className,
-    placeholder,
-    display,
-    paddingLeft,
-    classList,
-  }) => {
+  const updateMessageInput = ({ placeholder, classList }) => {
     let inputContainer = document.querySelector(".input-container");
     let messageInput = document.querySelector("#message-input");
 
@@ -185,11 +187,20 @@ export default function Home() {
     }
   };
 
+  // !tooltip should appear at an interval once;
   const [toolTipActive, setToolTipActive] = useState(false);
   const toolTipClass = toolTipActive ? "top-[4.5rem]" : "top-2";
+  const toolTipClassTwo = toolTipActive ? "top-[7.5rem]" : "top-2";
 
-  const handleTooltipClose = () => {
-    setToolTipActive(false);
+  const [toolTipMessage, setToolTipMessage] = useState("");
+  let messagesArray = [
+    "Press 'ctlr' to activate voice messaging",
+    "Type '@' sign to activate mention box",
+  ];
+
+  const handleToolTip = () => {
+    setToolTipMessage(messagesArray[0]);
+    setToolTipActive(true);
   };
 
   // picture selection;
@@ -207,6 +218,18 @@ export default function Home() {
     "https://images.unsplash.com/photo-1542596594-649edbc13630?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
   ];
 
+  //getting current time;
+  function getCurrentTimeFormatted() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const amOrPm = hours >= 12 ? "pm" : "am";
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+    const formattedTime = `${formattedHours}:${formattedMinutes} ${amOrPm}`;
+    return formattedTime;
+  }
+
   return (
     <main className="w-screen h-screen  grid place-items-center">
       <section
@@ -218,9 +241,7 @@ export default function Home() {
         <div
           className={`absolute min-w-max ${toolTipClass} bg-black text-white p-2 left-2/4 -translate-x-2/4 rounded-full pl-6 pr-2 tooltip flex items-center gap-2`}
         >
-          <p className="font-poppins text-[13px] w-full">
-            Type "@" sign to activate mention box
-          </p>
+          <p className="font-poppins text-[13px] w-full">{messagesArray[0]}</p>
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -232,7 +253,7 @@ export default function Home() {
               version="1.1"
               viewBox="0 0 29 29"
               onClick={() => {
-                handleTooltipClose();
+                setToolTipActive(false);
               }}
             >
               <path
@@ -247,32 +268,89 @@ export default function Home() {
             </svg>
           </div>
         </div>
-        <div className="w-full h-14 border-b border-zinc-300 bg-zinc-200 flex items-center relative">
+        <div
+          className={`absolute min-w-max ${toolTipClassTwo} bg-black text-white p-2 left-2/4 -translate-x-2/4 rounded-full pl-6 pr-2 tooltip flex items-center gap-2`}
+        >
+          <p className="font-poppins text-[13px] w-full">{messagesArray[1]}</p>
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              id="cancel"
+              x="0"
+              height="20"
+              width="20"
+              y="0"
+              version="1.1"
+              viewBox="0 0 29 29"
+              onClick={() => {
+                setToolTipActive(false);
+              }}
+            >
+              <path
+                fill="#555"
+                stroke="#555"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-miterlimit="10"
+                stroke-width="2"
+                d="M9.197 19.803L19.803 9.197M9.197 9.197l10.606 10.606"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <div className="w-full h-14 border-b border-zinc-300 bg-zinc-200 flex items-center relative justify-between px-4">
           <div
-            className="h-6 w-6 bg-zinc-500 rounded-[50%] absolute right-5"
-            // onClick={replyMessage}
+            className="py-1 px-5 cursor-pointer rounded-full font-poppins text-white text-sm bg-green-600"
+            onClick={replyMessage}
+            // onClick={(e) => {
+            //   e.stopPropagation();
+            //   handleToolTip();
+            // }}
+          >
+            <p className="pointer-events-none">Reply</p>
+          </div>
+          <div
+            className="h-6 w-6 bg-zinc-500 rounded-[50%]"
             onClick={(e) => {
               e.stopPropagation();
-              setToolTipActive(!toolTipActive);
+              handleToolTip();
             }}
           ></div>
         </div>
         <div className="w-full flex-grow flex flex-col">
-          <div className="flex-grow w-full pl-5 pb-0 pt-6">
+          <div className="flex-grow w-full pl-0 pb-0 pt-6">
             <ul
               ref={messagesContainerRef}
               className="w-full h-full overflow-y-auto  border-black max-h-[600px] text-container pb-3"
             >
-              {/* <audio
-               controls
-              >
-                <source src="/bubble-sound.mp3" type="audio/mp3"/>
-              </audio> */}
-
               <AnimatePresence initial={false} mode="popLayout">
                 {textMessages.map((message, index) => {
+                  const isBottomText =
+                    index > 0 && textMessages[index - 1].type === message.type;
+                  const isMiddleText =
+                    index > 0 &&
+                    textMessages[index + 1] &&
+                    textMessages[index + 1].type === message.type &&
+                    textMessages[index - 1].type === message.type;
+                  const isFirstText =
+                    index === 0 &&
+                    (textMessages[index + 1] == null ||
+                      textMessages[index + 1].type !== message.type);
+                  const isSingleTextOpt1 =
+                    index > 0 &&
+                    textMessages[index + 1] &&
+                    textMessages[index + 1].type !== message.type &&
+                    textMessages[index - 1].type !== message.type;
+                  const isSingleTextOpt2 =
+                    index > 0 &&
+                    textMessages[index + 1] == null &&
+                    textMessages[index - 1].type !== message.type;
+                  const myMessage =
+                    message.type === "Sent" ? "sent" : "received";
+
                   return (
                     <motion.li
+                      key={index}
                       // !exit animation does not workkkkk!!!!!!!!!!!!!!!!!!!!!
                       layout
                       initial={{ opacity: 0, scale: 0.5 }}
@@ -289,62 +367,28 @@ export default function Home() {
                       style={{
                         originX: message.type === "Sent" ? 1 : 0,
                       }}
-                      className={`${
+                      className={`h-auto ${
                         index > 0 &&
                         message.type != textMessages[index - 1].type
                           ? "mt-3"
                           : "mt-[2px]"
                       }
-                  flex text-white w-[99%] px-3`}
+                  flex flex-col  text-white w-[99%] pl-3 pr-1`}
                     >
                       <div
                         className={`text-lg py-3 px-5 font-jost ${
                           message.type === "Sent"
                             ? "bg-blue-600 ml-auto sent-message top-text"
                             : "bg-[#DEE1EB] text-[#222] received-message top-text-received"
-                        } ${
-                          index > 0 &&
-                          textMessages[index - 1].type === message.type
-                            ? "bottom-text"
-                            : ""
-                        }
+                        } ${isBottomText ? `bottom-text-${myMessage}` : ""}
                       
-                      ${
-                        index > 0 &&
-                        textMessages[index + 1] &&
-                        textMessages[index + 1].type === message.type &&
-                        textMessages[index - 1].type === message.type
-                          ? "middle-text"
-                          : ""
-                      } 
-                      ${
-                        index > 0 &&
-                        textMessages[index + 1] &&
-                        textMessages[index + 1].type !== message.type &&
-                        textMessages[index - 1].type !== message.type
-                          ? "single-text"
-                          : ""
-                      }
-                      ${
-                        index > 0 &&
-                        textMessages[index + 1] == null &&
-                        textMessages[index - 1].type !== message.type
-                          ? "single-text"
-                          : ""
-                      }
-                      ${
-                        index === 0 &&
-                        (textMessages[index + 1] == null ||
-                          textMessages[index + 1].type !== message.type)
-                          ? "single-text"
-                          : ""
-                      }
-                      max-w-[80%] overflow-ellipsis h-auto leading-6`}
+                      ${isMiddleText ? `middle-text-${myMessage}` : ""} 
+                      ${isSingleTextOpt1 ? "single-text" : ""}
+                      ${isSingleTextOpt2 ? "single-text" : ""}
+                      ${isFirstText ? "single-text" : ""}
+                      max-w-[80%] overflow-ellipsis h-auto max-w-fit leading-6`}
                       >
-                        <p className="break-words">
-                          {" "}
-                          {message.message + index}
-                        </p>
+                        <p className="break-words">{message.message}</p>
                       </div>
                     </motion.li>
                   );
@@ -494,25 +538,48 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div
-              className="h-[80%] aspect-square bg-purple-400 rounded-full cursor-pointer grid place-items-center"
-              onClick={sendMessage}
-            >
-              <svg
-                width="19"
-                height="18"
-                viewBox="0 0 19 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+            {message === "" ? (
+              <button
+                disabled
+                className={`h-[80%] aspect-square rounded-full cursor-not-allowed bg-purple-300 grid place-items-center`}
+                onClick={sendMessage}
               >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M0.790001 3.803C0.530001 1.469 2.933 -0.245002 5.056 0.760998L17 6.419C19.288 7.502 19.288 10.758 17 11.841L5.056 17.5C2.933 18.506 0.531001 16.792 0.790001 14.458L2.38779 10.1301L9.388 10.13C9.65322 10.13 9.90757 10.0246 10.0951 9.8371C10.2826 9.64957 10.388 9.39521 10.388 9.13C10.388 8.86478 10.2826 8.61043 10.0951 8.42289C9.90757 8.23536 9.65322 8.13 9.388 8.13L2.5 8L0.791001 3.803H0.790001Z"
-                  fill="#f4f4f4"
-                />
-              </svg>
-            </div>
+                <svg
+                  width="19"
+                  height="18"
+                  viewBox="0 0 19 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M0.790001 3.803C0.530001 1.469 2.933 -0.245002 5.056 0.760998L17 6.419C19.288 7.502 19.288 10.758 17 11.841L5.056 17.5C2.933 18.506 0.531001 16.792 0.790001 14.458L2.38779 10.1301L9.388 10.13C9.65322 10.13 9.90757 10.0246 10.0951 9.8371C10.2826 9.64957 10.388 9.39521 10.388 9.13C10.388 8.86478 10.2826 8.61043 10.0951 8.42289C9.90757 8.23536 9.65322 8.13 9.388 8.13L2.5 8L0.791001 3.803H0.790001Z"
+                    fill="#f4f4f4"
+                  />
+                </svg>
+              </button>
+            ) : (
+              <button
+                className={`h-[80%] aspect-square rounded-full cursor-pointer bg-purple-400 grid place-items-center`}
+                onClick={sendMessage}
+              >
+                <svg
+                  width="19"
+                  height="18"
+                  viewBox="0 0 19 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M0.790001 3.803C0.530001 1.469 2.933 -0.245002 5.056 0.760998L17 6.419C19.288 7.502 19.288 10.758 17 11.841L5.056 17.5C2.933 18.506 0.531001 16.792 0.790001 14.458L2.38779 10.1301L9.388 10.13C9.65322 10.13 9.90757 10.0246 10.0951 9.8371C10.2826 9.64957 10.388 9.39521 10.388 9.13C10.388 8.86478 10.2826 8.61043 10.0951 8.42289C9.90757 8.23536 9.65322 8.13 9.388 8.13L2.5 8L0.791001 3.803H0.790001Z"
+                    fill="#f4f4f4"
+                  />
+                </svg>
+              </button>
+            )}
           </div>
         </div>
       </section>

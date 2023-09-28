@@ -73,6 +73,7 @@ body {
 }
 
 .text-container {
+  overflow-y: scroll;
   scroll-behavior: smooth !important;
 }
 
@@ -82,7 +83,7 @@ body {
 }
 
 .text-container::-webkit-scrollbar-thumb {
-  background-color: #ccc;
+  background-color: #979696;
   border-radius: 10px;
 }
 
@@ -96,29 +97,48 @@ body {
 
 .top-text {
   border-radius: 30px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 10px;
+  border-bottom-right-radius: 7px;
 }
 
 .top-text-received {
   border-radius: 30px;
-  border-top-left-radius: 5px;
+  border-bottom-left-radius: 7px;
 }
 
-.bottom-text {
+.bottom-text-sent {
   border-radius: 30px;
-  border-top-right-radius: 10px;
+  border-top-right-radius: 7px ;
+  border-bottom-right-radius: 0px !important;
 }
 
-.middle-text {
-  border-radius: 30px;
-  border-bottom-right-radius: 10px;
-  border-top-right-radius: 10px;
+.bottom-text-received {  /* border-radius: 30px; */
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 0px !important;
 }
+
+.middle-text-sent {
+  border-radius: 30px;
+  border-bottom-right-radius: 7px !important;
+  border-top-right-radius: 7px;
+}
+
+.middle-text-received {
+  border-radius: 30px;
+  border-bottom-left-radius: 7px !important;
+  border-top-left-radius: 7px !important;
+}
+
+/* .middle-text ~ #time{
+  display: none !important;
+} */
 
 .single-text {
   border-radius: 30px !important;
 }
+
+/* .single-text ~ #time{
+  display: block !important;
+} */
 
 .tooltip {
   background-color: #e4e4e48a;
@@ -144,7 +164,6 @@ body {
   /* backdrop-filter: blur(5px); */
   border-radius: 20px;
   background-color: #ffffff00;
-  scroll-margin-right: 20px;
 }
 
 .image-container::-webkit-scrollbar {
