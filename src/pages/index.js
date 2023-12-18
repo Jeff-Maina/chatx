@@ -6,6 +6,29 @@ import { messages } from "@/data/messages";
 
 // import bubbleSound from "./bubble-sound.mp3"
 
+
+const groupMembers = [
+  "John",
+  "Emma",
+  "Michael",
+  "Sophia",
+  "Daniel",
+  "Olivia",
+  "David",
+  "Ava",
+  "Matthew",
+  "Isabella",
+];
+
+const images = [
+  "https://images.unsplash.com/photo-1542596594-649edbc13630?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+  "https://images.unsplash.com/photo-1548705085-101177834f47?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80",
+  "https://i.pinimg.com/564x/62/8f/1f/628f1fb26244403b8397a53b17b6fc76.jpg",
+  "https://i.pinimg.com/564x/60/98/7f/60987f29bba5aa32d652cddfe30841d9.jpg",
+  "https://i.pinimg.com/564x/51/4d/1b/514d1bd61f01b1968e5a44a522cce6cd.jpg",
+  "https://images.unsplash.com/photo-1542596594-649edbc13630?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+];
+
 export default function Home() {
   const conversation = [];
 
@@ -99,18 +122,7 @@ export default function Home() {
     }
   };
 
-  const groupMembers = [
-    "John",
-    "Emma",
-    "Michael",
-    "Sophia",
-    "Daniel",
-    "Olivia",
-    "David",
-    "Ava",
-    "Matthew",
-    "Isabella",
-  ];
+
 
   const selectMember = (member) => {
     setGroupMentionActive(false);
@@ -209,14 +221,7 @@ export default function Home() {
   const [isPictureGalleryActive, setPictureGalleryActive] = useState(false);
   const picGalleryClass = isPictureGalleryActive ? "h-64 " : "h-2 ";
 
-  const images = [
-    "https://images.unsplash.com/photo-1542596594-649edbc13630?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-    "https://images.unsplash.com/photo-1548705085-101177834f47?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80",
-    "https://i.pinimg.com/564x/62/8f/1f/628f1fb26244403b8397a53b17b6fc76.jpg",
-    "https://i.pinimg.com/564x/60/98/7f/60987f29bba5aa32d652cddfe30841d9.jpg",
-    "https://i.pinimg.com/564x/51/4d/1b/514d1bd61f01b1968e5a44a522cce6cd.jpg",
-    "https://images.unsplash.com/photo-1542596594-649edbc13630?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-  ];
+
 
   //getting current time;
   function getCurrentTimeFormatted() {
@@ -233,7 +238,7 @@ export default function Home() {
   return (
     <main className="w-screen h-screen  grid place-items-center">
       <section
-        className="section pb-3 relative"
+        className="section pb-3 relative rounded-3xl"
         onClick={() => {
           setPictureGalleryActive(false);
         }}
